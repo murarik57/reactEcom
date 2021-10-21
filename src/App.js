@@ -5,7 +5,7 @@ import ShopPage from "./pages/shop/ShopPage";
 import { Switch, Route } from "react-router";
 import SignInAndSignUpPAge from "./pages/signinandsignuppage/SignInAndSignUpPAge";
 import Header from "./components/header/Header";
-import { auth } from "./firebase/Firebase";
+import { auth, createUserProfileDocument } from "./firebase/Firebase";
 
 class App extends React.Component {
   constructor() {
@@ -14,12 +14,23 @@ class App extends React.Component {
       currentUser: null,
     };
   }
-  //below is my declared fn not any default fn of js
+  // below is my declared fn not any default fn of js
   unsubscribeFromAuth = null;
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      this.setState({ currentUser: user });
-      console.log(user);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const { userRef, snapShot } = await createUserProfileDocument(userAuth);
+        this.setState({
+          currentUser: {
+            id: userRef.id,
+            ...snapShot.data(),
+          },
+        });
+      } else {
+        this.setState({
+          currentUser: null,
+        });
+      }
     });
   }
 
