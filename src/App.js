@@ -6,30 +6,25 @@ import { Switch, Route } from "react-router";
 import SignInAndSignUpPAge from "./pages/signinandsignuppage/SignInAndSignUpPAge";
 import Header from "./components/header/Header";
 import { auth, createUserProfileDocument } from "./firebase/Firebase";
+import { connect } from "react-redux";
+import { setCurrentUser } from "./actions/user";
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      currentUser: null,
-    };
-  }
   // below is my declared fn not any default fn of js
   unsubscribeFromAuth = null;
   componentDidMount() {
+    //props comming from our reducer and store
+    const { setCurrentUser } = this.props;
+  
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const { userRef, snapShot } = await createUserProfileDocument(userAuth);
-        this.setState({
-          currentUser: {
-            id: userRef.id,
-            ...snapShot.data(),
-          },
+        setCurrentUser({
+          id: userRef.id,
+          ...snapShot.data(),
         });
       } else {
-        this.setState({
-          currentUser: null,
-        });
+        setCurrentUser(userAuth);
       }
     });
   }
@@ -41,7 +36,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header currentUser={this.state.currentUser} />
+        <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/shop" component={ShopPage} />
@@ -52,4 +47,8 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(App);
