@@ -1,6 +1,5 @@
 import React from "react";
 import CustomButton from "../custombutton/CustomButton";
-import { Route } from "react-router";
 import "./cartdropdown.scss";
 
 const CartDropdown = () => {
