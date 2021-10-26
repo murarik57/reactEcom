@@ -8,6 +8,7 @@ import Header from "./components/header/Header";
 import { auth, createUserProfileDocument } from "./firebase/Firebase";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./actions/user";
+import Checkout from "./pages/checkout/Checkout";
 
 class App extends React.Component {
   // below is my declared fn not any default fn of js
@@ -40,7 +41,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
 
-          <Route exact path="/shop" component={ShopPage} />
+          <Route path="/shop" component={ShopPage} />
           <Route
             exact
             path="/signin"
@@ -52,6 +53,7 @@ class App extends React.Component {
               )
             }
           />
+          <Route exact path="/checkout" component={Checkout} />
         </Switch>
       </div>
     );
