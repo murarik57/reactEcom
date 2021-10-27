@@ -1,15 +1,11 @@
 import React from "react";
 import "./collection.scss";
 import { connect } from "react-redux";
-import { COLLECTION_ID_MAP } from "../../actions/types";
 import CollectionItem from "../../components/collection-item/CollectionItem";
 
 const collectionPage = ({ match, collections }) => {
   const param = match.params.collectionId;
-  const value = collections.find(
-    (collection) => collection.id === COLLECTION_ID_MAP[param]
-  );
-  console.log(value);
+  const value = collections[param];
   const { id, title, items } = value;
   return (
     <div className="collection-page">
