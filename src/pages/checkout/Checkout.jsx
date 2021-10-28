@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import "./checkout.scss";
 import CheckOutItem from "../../components/checkout-item/CheckOutItem";
 import StripeButton from "../../components/stripe-button/StripeButton";
 
-const Checkout = ({ cartItems, itemTotal }) => {
+const Checkout = ({ cartItems, itemTotal, currentUser }) => {
   return (
     <div className="checkout-page">
       <div className="checkout-header">
@@ -28,7 +29,17 @@ const Checkout = ({ cartItems, itemTotal }) => {
         <CheckOutItem key={cartItem.id} cartItem={cartItem} />
       ))}
       <div className="total">TOTAL: ₹{itemTotal}</div>
-      <StripeButton price={itemTotal} />
+      {currentUser ? (
+        <StripeButton price={itemTotal} />
+      ) : (
+        <p>
+          Please Sign In To Buy&nbsp;
+          <Link className="option" to="/signin">
+            Click Here To login
+          </Link>
+        </p>
+      )}
+
       <div className="test-warning">
         *Please use the following test credit card for payments*
         <br />
@@ -37,8 +48,9 @@ const Checkout = ({ cartItems, itemTotal }) => {
     </div>
   );
 };
-const mapStateToProps = ({ cart: { cartItems } }) => ({
+const mapStateToProps = ({ cart: { cartItems }, user: { currentUser } }) => ({
   cartItems,
+  currentUser,
   itemTotal: cartItems.reduce(
     (accumulatedQuantity, cartItem) =>
       accumulatedQuantity + cartItem.price * cartItem.quantity,
