@@ -6,6 +6,22 @@
   align-items: center;
   margin: 50px auto 0;
 
+  .razorpay-payment-button {
+    font-weight: 600;
+    background-color: #7e2dce;
+    border-color: white;
+    color: white;
+    height: 100%;
+    width: 90%;
+    font-size: 0.75rem;
+    padding: 8px 12px;
+    border-radius: 20px;
+    border-width: 0px;
+    appearance: none;
+    margin: 12px;
+    cursor: pointer;
+  }
+
   .checkout-header {
     width: 100%;
     padding: 10px 0;

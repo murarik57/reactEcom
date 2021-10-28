@@ -14,6 +14,7 @@ class App extends React.Component {
   // below is my declared fn not any default fn of js
   unsubscribeFromAuth = null;
   componentDidMount() {
+
     //props comming from our reducer and store
     const { setCurrentUser } = this.props;
 
