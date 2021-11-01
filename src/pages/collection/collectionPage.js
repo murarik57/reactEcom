@@ -6,7 +6,7 @@ import CollectionItem from "../../components/collection-item/CollectionItem";
 const collectionPage = ({ match, collections }) => {
   const param = match.params.collectionId;
   const value = collections[param];
-  const { id, title, items } = value;
+  const { title, items } = value;
   return (
     <div className="collection-page">
       <h2 className="title">{title}</h2>
