@@ -3,10 +3,10 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import {
   getFirestore,
   getDoc,
+  getDocs,
   setDoc,
   doc,
   collection,
-  addDoc,
   writeBatch,
 } from "firebase/firestore";
 
@@ -51,7 +51,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return { userRef, snapShot };
 };
 
-// getting data from our firestore
+// Uploading my shop data into my firestore account in form of collection at once
 
 export const addCollectionAndDocuments = async (
   collectionKey,
@@ -68,4 +68,26 @@ export const addCollectionAndDocuments = async (
   });
 
   return await batch.commit();
+};
+
+export const convertCollectionsSnapshotToMap = async () => {
+  const db = getFirestore();
+  const collectionRef = collection(db, "collections");
+
+  const snapShot = await getDocs(collectionRef);
+
+  const transformedCollection = snapShot.docs.map((doc) => {
+    const { title, items } = doc.data();
+
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items,
+    };
+  });
+  return transformedCollection.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
 };
