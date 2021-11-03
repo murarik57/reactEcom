@@ -16,7 +16,7 @@ class ShopPage extends React.Component {
   }
 
   render() {
-    const { match, isFetching } = this.props;
+    const { match, isFetching, isCollectionLoaded } = this.props;
     console.log(isFetching);
 
     return (
@@ -25,22 +25,29 @@ class ShopPage extends React.Component {
           exact
           path={`${match.path}`}
           render={(props) => (
-            <CollectionsOverviewWithSpinner isloading={isFetching} {...props} />
+            <CollectionsOverviewWithSpinner
+              isloading={!isCollectionLoaded}
+              {...props}
+            />
           )}
         />
         <Route
           exact
           path={`${match.path}/:collectionId`}
           render={(props) => (
-            <CollectionPageWithSpinner isLoading={isFetching} {...props} />
+            <CollectionPageWithSpinner
+              isLoading={!isCollectionLoaded}
+              {...props}
+            />
           )}
         />
       </div>
     );
   }
 }
-const mapStateToProps = ({ shop: { isFetching } }) => ({
+const mapStateToProps = ({ shop: { isFetching, collections } }) => ({
   isFetching,
+  isCollectionLoaded: !!collections,
 });
 const mapDispatchToProps = (dispatch) => ({
   fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync()),
