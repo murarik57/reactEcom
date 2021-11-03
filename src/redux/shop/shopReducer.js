@@ -1,13 +1,25 @@
-// import SHOP_DATA from "./ShopData";
-import { UPDATE_COLLECTIONS } from "../../actions/types";
+import {
+  FETCH_COLLECTIONS_START,
+  FETCH_COLLECTIONS_SUCCESS,
+} from "../../actions/types";
 
-const initialState = {};
+const initialState = {
+  collections: null,
+  isFetching: false,
+};
 
 const shopReducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_COLLECTIONS:
+    case FETCH_COLLECTIONS_START:
       return {
         ...state,
+        isFetching: true,
+      };
+
+    case FETCH_COLLECTIONS_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
         collections: action.payload,
       };
 
