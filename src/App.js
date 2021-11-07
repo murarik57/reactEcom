@@ -6,35 +6,9 @@ import { Switch, Route, Redirect } from "react-router";
 import SignInAndSignUpPAge from "./pages/signinandsignuppage/SignInAndSignUpPAge";
 import Header from "./components/header/Header";
 import { connect } from "react-redux";
-import { setCurrentUser } from "./actions/user";
 import Checkout from "./pages/checkout/Checkout";
 
 class App extends React.Component {
-  /** 
-  // below is my declared variable not any default fn of js
-  unsubscribeFromAuth = null;
-  componentDidMount() {
-    //props comming from our reducer and store
-    const { setCurrentUser } = this.props;
-
-    // console.log(collectionsArray);
-  this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        const { userRef, snapShot } = await createUserProfileDocument(userAuth);
-        setCurrentUser({
-          id: userRef.id,
-          ...snapShot.data(),
-        });
-      } else {
-        setCurrentUser(userAuth);
-      }
-    });
-   
-  }
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
-  }
- */
   render() {
     return (
       <div>
@@ -65,8 +39,4 @@ const mapStateToProps = ({ user: { currentUser } }) => ({
   currentUser,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

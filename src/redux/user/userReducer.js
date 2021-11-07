@@ -1,9 +1,4 @@
-import {
-  GOOGLE_SIGN_IN_SUCCESS,
-  GOOGLE_SIGN_IN_ERROR,
-  EMAIL_SIGN_IN_ERROR,
-  EMAIL_SIGN_IN_SUCCESS,
-} from "../../actions/types";
+import { SIGN_IN_SUCCESS, SIGN_IN_ERROR } from "../../actions/types";
 
 const initialState = {
   currentUser: null,
@@ -13,15 +8,14 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case GOOGLE_SIGN_IN_SUCCESS:
-    case EMAIL_SIGN_IN_SUCCESS:
+    case SIGN_IN_SUCCESS:
       return {
         ...state,
         currentUser: payload,
+        error: null,
       };
 
-    case GOOGLE_SIGN_IN_ERROR:
-    case EMAIL_SIGN_IN_ERROR:
+    case SIGN_IN_ERROR:
       return {
         ...state,
         error: payload,
