@@ -5,19 +5,20 @@ import ShopPage from "./pages/shop/ShopPage";
 import { Switch, Route, Redirect } from "react-router";
 import SignInAndSignUpPAge from "./pages/signinandsignuppage/SignInAndSignUpPAge";
 import Header from "./components/header/Header";
-import { auth, createUserProfileDocument } from "./firebase/Firebase";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./actions/user";
 import Checkout from "./pages/checkout/Checkout";
 
 class App extends React.Component {
-  // below is my declared fn not any default fn of js
+  /** 
+  // below is my declared variable not any default fn of js
   unsubscribeFromAuth = null;
   componentDidMount() {
     //props comming from our reducer and store
     const { setCurrentUser } = this.props;
+
     // console.log(collectionsArray);
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+  this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const { userRef, snapShot } = await createUserProfileDocument(userAuth);
         setCurrentUser({
@@ -28,12 +29,12 @@ class App extends React.Component {
         setCurrentUser(userAuth);
       }
     });
+   
   }
-
   componentWillUnmount() {
     this.unsubscribeFromAuth();
   }
-
+ */
   render() {
     return (
       <div>
