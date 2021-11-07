@@ -4,7 +4,7 @@ import { compose } from "redux";
 import WithSpinner from "../../components/with-spinner/WithSpinner";
 
 const mapStateToProps = ({ shop: { collections } }) => ({
-  isLoading: false,
+  isLoading: !!collections ? false : true,
 });
 
 const CollectionPageContainer = compose(
