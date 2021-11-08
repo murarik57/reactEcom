@@ -3,6 +3,7 @@ import {
   SIGN_IN_ERROR,
   SIGN_OUT_ERROR,
   SIGN_OUT_SUCCESS,
+  SIGN_UP_ERROR,
 } from "../../actions/types";
 
 const initialState = {
@@ -27,6 +28,7 @@ const userReducer = (state = initialState, action) => {
       };
     case SIGN_IN_ERROR:
     case SIGN_OUT_ERROR:
+    case SIGN_UP_ERROR:
       return {
         ...state,
         error: payload,

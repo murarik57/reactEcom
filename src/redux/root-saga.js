@@ -5,6 +5,8 @@ import {
   onEmailSignInStart,
   onCheckUserSession,
   onSignOutStart,
+  onSignUpStart,
+  onSignUpSuccess,
 } from "./user/user.saga";
 import { onSignOutSuccess } from "./cart/cart.sagas";
 
@@ -16,5 +18,7 @@ export default function* rootSaga() {
     call(onCheckUserSession),
     call(onSignOutStart),
     call(onSignOutSuccess),
+    call(onSignUpStart),
+    call(onSignUpSuccess),
   ]);
 }
