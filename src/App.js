@@ -7,8 +7,13 @@ import SignInAndSignUpPAge from "./pages/signinandsignuppage/SignInAndSignUpPAge
 import Header from "./components/header/Header";
 import { connect } from "react-redux";
 import Checkout from "./pages/checkout/Checkout";
+import { checkUserSession } from "./actions/user";
 
 class App extends React.Component {
+  componentDidMount() {
+    const { checkUserSession } = this.props;
+    checkUserSession();
+  }
   render() {
     return (
       <div>
@@ -38,5 +43,8 @@ class App extends React.Component {
 const mapStateToProps = ({ user: { currentUser } }) => ({
   currentUser,
 });
+const mapDispatchToProps = (dispatch) => ({
+  checkUserSession: () => dispatch(checkUserSession()),
+});
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
