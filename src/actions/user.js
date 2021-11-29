@@ -32,9 +32,8 @@ export const googleSignInStart = () => ({
   type: GOOGLE_SIGN_IN_START,
 });
 
-export const emailSignInStart = (emailAndPassword) => ({
+export const emailSignInStart = () => ({
   type: EMAIL_SIGN_IN_START,
-  payload: emailAndPassword,
 });
 
 export const checkUserSession = () => ({

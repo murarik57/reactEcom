@@ -13,10 +13,7 @@ import {
   auth,
   getCurrentUser,
 } from "../../firebase/Firebase";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from "@firebase/auth";
+import { createUserWithEmailAndPassword } from "@firebase/auth";
 
 import {
   signInSuccess,
@@ -45,14 +42,8 @@ export function* onGoogleSignInStart() {
 
 //signin with email and password
 
-export function* emailSignIn({ payload: { email, password } }) {
-  try {
-    const { user } = yield signInWithEmailAndPassword(auth, email, password);
-    const { snapShot } = yield call(createUserProfileDocument, user);
-    yield put(signInSuccess({ id: snapShot.id, ...snapShot.data() }));
-  } catch (error) {
-    yield put(signInError(error));
-  }
+export function* emailSignIn() {
+  yield put(signInSuccess(JSON.parse(localStorage.getItem("user"))));
 }
 
 export function* onEmailSignInStart() {
@@ -62,15 +53,8 @@ export function* onEmailSignInStart() {
 //User session check code
 
 export function* isUserAuthenticated() {
-  try {
-    const userAuth = yield getCurrentUser();
-    if (!userAuth) return;
-    else {
-      const { snapShot } = yield call(createUserProfileDocument, userAuth);
-      yield put(signInSuccess({ id: snapShot.id, ...snapShot.data() }));
-    }
-  } catch (error) {
-    yield put(signInError(error));
+  if (localStorage.getItem("user")) {
+    yield put(signInSuccess(JSON.parse(localStorage.getItem("user"))));
   }
 }
 
@@ -80,12 +64,8 @@ export function* onCheckUserSession() {
 
 //user sign out
 export function* userSignOut() {
-  try {
-    yield auth.signOut();
-    yield put(signOutSuccess());
-  } catch (error) {
-    yield put(signOutError(error));
-  }
+  localStorage.removeItem("user");
+  yield put(signOutSuccess());
 }
 
 export function* onSignOutStart() {

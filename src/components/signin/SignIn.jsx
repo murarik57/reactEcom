@@ -4,6 +4,7 @@ import "./signin.scss";
 import CustomButton from "../custombutton/CustomButton";
 import { connect } from "react-redux";
 import { googleSignInStart, emailSignInStart } from "../../actions/user";
+import axios from "axios";
 
 const SignIn = ({ emailSignInStart, googleSignInStart }) => {
   const [userCredentials, setCredentials] = useState({
@@ -15,7 +16,28 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    emailSignInStart(email, password);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = JSON.stringify({ email, password });
+
+    try {
+      const res = await axios.post(
+        "http://127.0.0.1:8000/api/login",
+        body,
+        config
+      );
+      if (res.data.error) {
+        alert(res.data.error);
+      } else {
+        localStorage.setItem("user", JSON.stringify(res.data));
+        emailSignInStart();
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleChange = (e) => {

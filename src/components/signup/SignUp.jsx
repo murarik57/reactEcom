@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import "./signup.scss";
 import FormInput from "../forminput/FormInput";
 import CustomButton from "../custombutton/CustomButton";
-import { connect } from "react-redux";
-import { signUpStart } from "../../actions/user";
+
 import axios from "axios";
 
-const SignUp = ({ signUpStart }) => {
+const SignUp = () => {
   const [userCredentials, setuserCredentials] = useState({
     displayName: "",
     email: "",
@@ -27,15 +26,9 @@ const SignUp = ({ signUpStart }) => {
         },
       };
       const body = JSON.stringify({ displayName, email, password });
-      console.log(body);
 
       try {
-        const res = await axios.post(
-          "http://127.0.0.1:8000/api/register",
-          body,
-          config
-        );
-        alert(res);
+        await axios.post("http://127.0.0.1:8000/api/register", body, config);
       } catch (err) {
         console.log(err);
       }
@@ -89,8 +82,5 @@ const SignUp = ({ signUpStart }) => {
     </div>
   );
 };
-const mapDispatchToProps = (dispatch) => ({
-  signUpStart: (userCredentials) => dispatch(signUpStart(userCredentials)),
-});
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default SignUp;
