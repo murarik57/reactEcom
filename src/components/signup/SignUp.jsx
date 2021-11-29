@@ -4,6 +4,7 @@ import FormInput from "../forminput/FormInput";
 import CustomButton from "../custombutton/CustomButton";
 import { connect } from "react-redux";
 import { signUpStart } from "../../actions/user";
+import axios from "axios";
 
 const SignUp = ({ signUpStart }) => {
   const [userCredentials, setuserCredentials] = useState({
@@ -19,7 +20,26 @@ const SignUp = ({ signUpStart }) => {
     e.preventDefault();
 
     if (password !== confirmPassword) alert("Passowrd Didn't Match");
-    else signUpStart({ email, displayName, password });
+    else {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const body = JSON.stringify({ displayName, email, password });
+      console.log(body);
+
+      try {
+        const res = await axios.post(
+          "http://127.0.0.1:8000/api/register",
+          body,
+          config
+        );
+        alert(res);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   const handleChange = (event) => {
