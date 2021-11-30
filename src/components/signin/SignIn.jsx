@@ -19,6 +19,7 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
+        "client-secret": "heythisismmyclientsecret2021",
       },
     };
     const body = JSON.stringify({ email, password });

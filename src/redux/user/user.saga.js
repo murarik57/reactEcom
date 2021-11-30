@@ -11,14 +11,12 @@ import {
   createUserProfileDocument,
   signInWithGoogle,
   auth,
-  getCurrentUser,
 } from "../../firebase/Firebase";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
 
 import {
   signInSuccess,
   signInError,
-  signOutError,
   signOutSuccess,
   signUpError,
   signUpSuccess,
